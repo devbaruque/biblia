@@ -58,6 +58,10 @@ form {
     align-items: center;
 }
 
+h3 {
+    padding: 10px;
+}
+
 input[type="text"] {
     width: 95%;
     padding: 1rem 5px;
