@@ -19,6 +19,7 @@ body, html {
     width: 90%;
     max-width: 400px;
     padding: 20px;
+    max-height: calc(100vh - 150px);
 }
 
 header {
@@ -135,5 +136,5 @@ button:disabled {
     bottom: 15px;
     color: #000000;
     font-size: 7px;
-    padding-top: 5px;
+    padding: 5px;
 }
