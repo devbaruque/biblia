@@ -143,3 +143,7 @@ button:disabled {
     font-size: 8px;
     padding: 7px;
 }
+
+.copy a {
+    text-decoration: none;
+}
