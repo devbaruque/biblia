@@ -145,5 +145,10 @@ button:disabled {
 }
 
 .copy a {
+    color: #0217ff;
     text-decoration: none;
+}
+
+.copy a:hover {
+    text-decoration: underline;
 }
