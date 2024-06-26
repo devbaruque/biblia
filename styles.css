@@ -22,22 +22,6 @@ body, html {
     max-height: calc(100vh - 150px);
 }
 
-header {
-    margin-bottom: 20px;
-}
-
-header h2 {
-    font-size: 1rem;
-    color: #ffffff;
-}
-
-header h1 {
-    font-size: 1.5rem;
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-}
-
 .card {
     background: #ffffff;
     border-radius: 20px;
@@ -49,7 +33,12 @@ header h1 {
 .character-image {
     width: 120px;
     height: 120px;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    
 }
 
 form {
