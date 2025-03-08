@@ -1,22 +1,30 @@
-require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
+const cors = require("cors"); // Importe o pacote cors
 const app = express();
 
-// Middleware para permitir requisições do frontend
-app.use(cors());
+// Configura o CORS para permitir requisições do frontend
+app.use(
+  cors({
+    origin: "https://santosaber.vercel.app", // URL do frontend
+    methods: ["GET", "POST"], // Métodos permitidos
+    allowedHeaders: ["Content-Type"], // Cabeçalhos permitidos
+  })
+);
+
 app.use(express.json());
 
-// Rota para enviar a pergunta à API da IA
+// Rota /api/chat
 app.post("/api/chat", async (req, res) => {
   const { message } = req.body;
+
+  console.log("Pergunta recebida:", message); // Log da pergunta
 
   try {
     const response = await fetch("https://biblia-puug.vercel.app/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-key": process.env.API_KEY, // Chave de API do .env
+        "x-key": process.env.API_KEY,
       },
       body: JSON.stringify({ message }),
     });
@@ -29,12 +37,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// Rota de teste para verificar se o backend está funcionando
-app.get("/", (req, res) => {
-  res.send("Backend está funcionando!");
-});
-
-// Inicia o servidor
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);

@@ -20,3 +20,4 @@ node_modules/
 # Ignorar arquivos de build/dist
 dist/
 build/
+.vercel
