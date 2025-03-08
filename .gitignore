@@ -1,0 +1,22 @@
+# Ignorar o arquivo .env (contém variáveis sensíveis)
+.env
+
+# Ignorar a pasta node_modules (dependências do projeto)
+node_modules/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de configuração local
+*.local
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+
+# Ignorar arquivos de IDE/editor
+.vscode/
+.idea/
+
+# Ignorar arquivos de build/dist
+dist/
+build/
