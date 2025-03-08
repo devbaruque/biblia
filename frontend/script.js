@@ -18,7 +18,7 @@ document
     containerResposta.style.display = "none";
 
     questionInput.value = "";
-    fetch("https://seu-backend.vercel.app/api/chat", {
+    fetch("https://biblia-puug.vercel.app/api/chat", {
       // URL do backend no Vercel
       method: "POST",
       headers: {

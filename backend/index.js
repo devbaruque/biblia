@@ -12,7 +12,7 @@ app.post("/api/chat", async (req, res) => {
   const { message } = req.body;
 
   try {
-    const response = await fetch("https://chatbiblia.fly.dev/api/chat", {
+    const response = await fetch("https://biblia-puug.vercel.app/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
