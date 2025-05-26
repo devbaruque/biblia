@@ -8,7 +8,6 @@ class SantoSaberChat {
         this.setupEventListeners();
         this.initializeWelcomeMessage();
         this.loadConversationHistory();
-        this.checkApiKey();
         console.log('✅ SantoSaberChat inicializado com sucesso');
     }
 
@@ -18,43 +17,6 @@ class SantoSaberChat {
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
-    }
-
-    checkApiKey() {
-        console.log('🔑 Verificando chave da API...');
-        if (!window.CONFIG) {
-            console.error('❌ CONFIG não encontrado');
-            this.showApiKeyWarning();
-            return;
-        }
-        
-        if (CONFIG.GEMINI_API_KEY === 'SUA_CHAVE_AQUI') {
-            console.error('❌ Chave da API não configurada');
-            this.showApiKeyWarning();
-            return;
-        }
-        
-        console.log('✅ Chave da API configurada:', CONFIG.GEMINI_API_KEY.substring(0, 10) + '...');
-    }
-
-    showApiKeyWarning() {
-        const warningMessage = document.createElement('div');
-        warningMessage.className = 'api-warning';
-        warningMessage.innerHTML = `
-            <div class="warning-content">
-                <h3>⚠️ Configuração Necessária</h3>
-                <p>Para usar o Santo Saber, você precisa configurar sua chave da API do Google Gemini.</p>
-                <ol>
-                    <li>Acesse: <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
-                    <li>Crie uma chave de API gratuita</li>
-                    <li>Abra o arquivo <code>config.js</code></li>
-                    <li>Substitua 'SUA_CHAVE_AQUI' pela sua chave real</li>
-                </ol>
-                <button onclick="this.parentElement.parentElement.remove()">Entendi</button>
-            </div>
-        `;
-        
-        document.body.appendChild(warningMessage);
     }
 
     initializeElements() {
@@ -156,13 +118,6 @@ class SantoSaberChat {
         }
 
         console.log('❓ Pergunta:', question);
-
-        // Verifica se a API key está configurada
-        if (!window.CONFIG || CONFIG.GEMINI_API_KEY === 'SUA_CHAVE_AQUI') {
-            console.error('❌ API key não configurada');
-            this.showApiKeyWarning();
-            return;
-        }
 
         // Desabilita o formulário
         this.setFormState(false);
