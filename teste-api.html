@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste API Gemini</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .resultado {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        button {
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste da API do Gemini</h1>
+    <p>Clique no botão para testar se a API está funcionando:</p>
+    
+    <button onclick="testarAPI()">Testar API</button>
+    
+    <div id="resultado" class="resultado" style="display: none;">
+        <h3>Resultado:</h3>
+        <div id="resposta"></div>
+    </div>
+
+    <script>
+        async function testarAPI() {
+            const apiKey = 'AIzaSyApjWz-V934CRMJ0vMeWeLIPm6kan40b58';
+            const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+            
+            const resultadoDiv = document.getElementById('resultado');
+            const respostaDiv = document.getElementById('resposta');
+            
+            resultadoDiv.style.display = 'block';
+            respostaDiv.innerHTML = 'Testando...';
+            
+            try {
+                const response = await fetch(`${url}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: 'Olá! Você é o Santo Saber? Me fale sobre Jesus Cristo em poucas palavras.'
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    respostaDiv.innerHTML = `
+                        <strong>✅ API funcionando!</strong><br><br>
+                        <strong>Resposta:</strong><br>
+                        ${data.candidates[0].content.parts[0].text}
+                    `;
+                } else {
+                    respostaDiv.innerHTML = '❌ Resposta inválida da API';
+                }
+                
+            } catch (error) {
+                respostaDiv.innerHTML = `❌ Erro: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html> 

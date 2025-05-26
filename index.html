@@ -6,38 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="jesus.jpg" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Santo-Saber</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="card">
-            <img src="jesus.jpg" alt="Personagem" class="character-image">
-            <div id="textPergunta">
-                <h2>Santo Saber</h2>
-                <h3>Me pergunte sobre Teologia, Filosofia, Evangelho e Fé.</h3>
-            </div>
-            <form id="questionForm">
-                <input type="text" id="questionInput" placeholder="Digite sua pergunta aqui..." required>
-                <button type="submit">Perguntar</button>
-            </form>
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p>Carregando...</p>
-            </div>
-            <div id="questionDisplay" class="question-display"></div>
-            <div id="responseContainer" class="responseContainer">
-                <div id="titulo">
-                    <span class="cssText">Aqui está a resposta para a sua pergunta: </span>
+        <div class="chat-container">
+            <!-- Header do Chat -->
+            <div class="chat-header">
+                <img src="jesus.jpg" alt="Santo Saber" class="character-image">
+                <div class="header-info">
+                    <h2>Santo Saber</h2>
+                    <p class="subtitle">Teologia, Filosofia, Evangelho e Fé</p>
                 </div>
-                <div id="response" class="response">
+                <button id="clearChat" class="clear-btn" title="Limpar conversa">🗑️</button>
+            </div>
+
+            <!-- Área de Mensagens -->
+            <div id="chatMessages" class="chat-messages">
+                <div class="welcome-message">
+                    <div class="bot-message">
+                        <div class="message-content">
+                            <p>Olá! Sou o Santo Saber, seu assistente para questões sobre Teologia, Filosofia, Evangelho e Fé. Como posso ajudá-lo hoje?</p>
+                        </div>
+                        <span class="message-time" id="welcomeTime"></span>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Indicador de Digitação -->
+            <div id="typingIndicator" class="typing-indicator">
+                <div class="bot-message">
+                    <div class="message-content typing">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="typing-text">Santo Saber está digitando...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário de Input -->
+            <div class="chat-input-container">
+                <form id="questionForm" class="chat-form">
+                    <div class="input-wrapper">
+                        <input type="text" id="questionInput" placeholder="Digite sua pergunta aqui..." required>
+                        <button type="submit" id="sendButton">
+                            <span class="send-icon">📤</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-        <p class="copy"><strong>Copyright 2024 - <a href="https://cartao-luiz-rocha.vercel.app/" target="_blank">@dev.baruque</a></strong></p>
+        
+        <p class="copy">
+            <strong>Copyright 2024 - <a href="https://cartao-luiz-rocha.vercel.app/" target="_blank">@dev.baruque</a></strong>
+        </p>
     </div>
-    <script src="script.js" type="module"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

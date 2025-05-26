@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Santo Saber</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .debug {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        button {
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debug Santo Saber</h1>
+    
+    <div class="debug" id="status">Carregando...</div>
+    
+    <input type="text" id="pergunta" placeholder="Digite sua pergunta aqui..." value="Quem foi Jesus Cristo?">
+    <button onclick="testarChat()">Testar Chat</button>
+    <button onclick="limparLog()">Limpar Log</button>
+    
+    <div class="debug" id="log"></div>
+
+    <script src="config.js"></script>
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+            console.log(message);
+        }
+
+        function limparLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Verificar se config carregou
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusDiv = document.getElementById('status');
+            
+            if (window.CONFIG) {
+                statusDiv.innerHTML = `✅ Config carregado. API Key: ${CONFIG.GEMINI_API_KEY.substring(0, 10)}...`;
+                log('Config carregado com sucesso');
+            } else {
+                statusDiv.innerHTML = '❌ Config não carregado';
+                log('ERRO: Config não carregado');
+            }
+        });
+
+        async function testarChat() {
+            const pergunta = document.getElementById('pergunta').value;
+            
+            if (!window.CONFIG) {
+                log('ERRO: CONFIG não disponível');
+                return;
+            }
+
+            log(`Enviando pergunta: ${pergunta}`);
+            
+            try {
+                // Construir prompt
+                const fullPrompt = window.SYSTEM_PROMPT + '\n\nPergunta atual: ' + pergunta;
+                log('Prompt construído');
+
+                const requestBody = {
+                    contents: [{
+                        parts: [{
+                            text: fullPrompt
+                        }]
+                    }],
+                    generationConfig: CONFIG.MODEL_CONFIG,
+                    safetySettings: CONFIG.SAFETY_SETTINGS
+                };
+
+                log('Fazendo requisição para: ' + CONFIG.GEMINI_API_URL);
+
+                const response = await fetch(`${CONFIG.GEMINI_API_URL}?key=${CONFIG.GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                log(`Status da resposta: ${response.status}`);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    log(`ERRO da API: ${JSON.stringify(errorData)}`);
+                    return;
+                }
+
+                const data = await response.json();
+                log('Resposta recebida com sucesso');
+
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const resposta = data.candidates[0].content.parts[0].text;
+                    log(`✅ SUCESSO! Resposta: ${resposta.substring(0, 100)}...`);
+                } else {
+                    log(`ERRO: Estrutura de resposta inválida: ${JSON.stringify(data)}`);
+                }
+
+            } catch (error) {
+                log(`ERRO de rede: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html> 
