@@ -1,7 +1,7 @@
 // Configuração da API do Google Gemini
 const CONFIG = {
-    // A chave será carregada dinamicamente do .env ou configurada manualmente
-    GEMINI_API_KEY: 'SUA_CHAVE_AQUI', // Será substituída pela chave real do .env
+    // A chave será carregada das variáveis de ambiente (Vercel) ou arquivo .env (local)
+    GEMINI_API_KEY: 'SUA_CHAVE_AQUI', // Será substituída pela chave real
     
     // URL da API do Gemini (atualizada para o modelo correto)
     GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
@@ -35,10 +35,26 @@ const CONFIG = {
     ]
 };
 
-// Função para inicializar a configuração com variáveis de ambiente
+// Função para inicializar a configuração
 async function initializeConfig() {
     try {
-        // Tenta carregar do arquivo .env
+        // Primeiro, tenta carregar das variáveis de ambiente do Vercel
+        // Isso funciona através de uma API route que criamos
+        const envResponse = await fetch('/api/config');
+        if (envResponse.ok) {
+            const envData = await envResponse.json();
+            if (envData.GEMINI_API_KEY && envData.GEMINI_API_KEY !== 'SUA_CHAVE_AQUI') {
+                CONFIG.GEMINI_API_KEY = envData.GEMINI_API_KEY;
+                console.log('✅ Chave da API carregada das variáveis de ambiente (Vercel)');
+                return;
+            }
+        }
+    } catch (error) {
+        console.log('🔄 Tentando carregar do arquivo .env local...');
+    }
+
+    try {
+        // Fallback: tenta carregar do arquivo .env (desenvolvimento local)
         const response = await fetch('.env');
         if (response.ok) {
             const envContent = await response.text();
@@ -48,12 +64,12 @@ async function initializeConfig() {
                 const [key, value] = line.split('=');
                 if (key && value && key.trim() === 'GEMINI_API_KEY') {
                     CONFIG.GEMINI_API_KEY = value.trim();
-                    console.log('✅ Chave da API carregada do arquivo .env');
+                    console.log('✅ Chave da API carregada do arquivo .env local');
                 }
             });
         }
     } catch (error) {
-        console.log('📝 Arquivo .env não encontrado. Configure a chave manualmente no config.js');
+        console.log('📝 Configure a chave da API nas variáveis de ambiente do Vercel ou no arquivo .env local');
     }
 }
 

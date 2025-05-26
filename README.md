@@ -10,34 +10,52 @@ Uma aplicação web de chat para perguntas e respostas sobre Teologia, Filosofia
 - 🎯 Especializado em temas bíblicos e teológicos
 - 📱 Design responsivo para mobile e desktop
 - 🔒 Configuração segura de API keys
+- ☁️ Deploy automático no Vercel
 
 ## 🚀 Como Usar
 
 ### 1. Configuração da API
 
-#### Opção A: Usando arquivo .env (Recomendado)
+#### Para Deploy no Vercel (Produção)
+1. **Obtenha sua chave da API do Google Gemini:**
+   - Acesse: [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Crie uma conta gratuita
+   - Gere uma nova API key
+
+2. **Configure no Vercel:**
+   - Acesse seu projeto no [Vercel Dashboard](https://vercel.com)
+   - Vá em **Settings** → **Environment Variables**
+   - Adicione uma nova variável:
+     - **Name**: `GEMINI_API_KEY`
+     - **Value**: `sua_chave_real_aqui`
+     - **Environment**: Production, Preview, Development
+   - Clique em **Save**
+
+3. **Redeploy (se necessário):**
+   - Vá em **Deployments**
+   - Clique nos três pontos da última deployment
+   - Selecione **Redeploy**
+
+#### Para Desenvolvimento Local
+
+##### Opção A: Usando arquivo .env (Recomendado)
 1. Copie o arquivo `.env.example` para `.env`:
    ```bash
    cp .env.example .env
    ```
 
-2. Obtenha sua chave da API do Google Gemini:
-   - Acesse: [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Crie uma conta gratuita
-   - Gere uma nova API key
-
-3. Edite o arquivo `.env` e substitua `SUA_CHAVE_AQUI` pela sua chave real:
+2. Edite o arquivo `.env` e substitua `SUA_CHAVE_AQUI` pela sua chave real:
    ```
    GEMINI_API_KEY=sua_chave_real_aqui
    ```
 
-#### Opção B: Configuração manual
+##### Opção B: Configuração manual
 1. Abra o arquivo `config.js`
 2. Substitua `'SUA_CHAVE_AQUI'` pela sua chave real da API
 
 ### 2. Executando a Aplicação
 
-#### Opção A: Servidor Local (Recomendado)
+#### Desenvolvimento Local
 ```bash
 # Navegue até a pasta do projeto
 cd santo-saber
@@ -49,8 +67,9 @@ python3 -m http.server 8000
 http://localhost:8000
 ```
 
-#### Opção B: Abrir diretamente
-- Abra o arquivo `index.html` diretamente no navegador
+#### Produção (Vercel)
+- A aplicação é automaticamente deployada quando você faz push para o GitHub
+- Acesse sua URL do Vercel (ex: `https://seu-projeto.vercel.app`)
 
 ## 📋 Limites da API Gratuita
 
@@ -62,6 +81,7 @@ http://localhost:8000
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **API**: Google Gemini 1.5 Flash
+- **Deploy**: Vercel (Serverless Functions)
 - **Estilo**: Design moderno com gradientes e animações
 - **Responsividade**: Mobile-first design
 
@@ -69,22 +89,39 @@ http://localhost:8000
 
 ```
 santo-saber/
-├── index.html          # Página principal
-├── styles.css          # Estilos da aplicação
-├── script.js           # Lógica principal do chat
-├── config.js           # Configurações da API
-├── jesus.jpg           # Imagem do avatar
-├── .env.example        # Exemplo de configuração
-├── .env                # Suas configurações (não versionado)
-├── .gitignore          # Arquivos ignorados pelo Git
-└── README.md           # Este arquivo
+├── api/
+│   └── config.js           # API route para variáveis de ambiente (Vercel)
+├── index.html              # Página principal
+├── styles.css              # Estilos da aplicação
+├── script.js               # Lógica principal do chat
+├── config.js               # Configurações da API
+├── jesus.jpg               # Imagem do avatar
+├── .env.example            # Exemplo de configuração
+├── .env                    # Suas configurações locais (não versionado)
+├── .gitignore              # Arquivos ignorados pelo Git
+└── README.md               # Este arquivo
 ```
 
 ## 🔒 Segurança
 
-- ✅ Arquivo `.env` está no `.gitignore` (não será enviado para o GitHub)
-- ✅ Apenas `.env.example` é versionado (sem chaves reais)
-- ✅ Configuração flexível (arquivo ou manual)
+- ✅ **Vercel**: Variáveis de ambiente seguras no servidor
+- ✅ **Local**: Arquivo `.env` está no `.gitignore`
+- ✅ **GitHub**: Apenas `.env.example` é versionado (sem chaves reais)
+- ✅ **API Route**: Serve configurações de forma segura
+- ✅ **Configuração flexível**: Funciona local e em produção
+
+## 🚀 Deploy no Vercel
+
+1. **Fork este repositório**
+2. **Conecte ao Vercel:**
+   - Acesse [vercel.com](https://vercel.com)
+   - Clique em "New Project"
+   - Importe seu fork do GitHub
+3. **Configure a variável de ambiente:**
+   - Adicione `GEMINI_API_KEY` nas Environment Variables
+4. **Deploy automático:**
+   - O Vercel fará o deploy automaticamente
+   - Cada push no GitHub atualiza a aplicação
 
 ## 🤝 Contribuindo
 
