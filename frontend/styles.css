@@ -211,6 +211,7 @@ body, html {
     padding: 20px;
     background: white;
     border-top: 1px solid #e0e0e0;
+    position: relative;
 }
 
 .chat-form {
@@ -225,6 +226,7 @@ body, html {
     border-radius: 25px;
     padding: 4px;
     align-items: center;
+    position: relative;
 }
 
 #questionInput {
@@ -252,6 +254,7 @@ body, html {
     align-items: center;
     justify-content: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 10;
 }
 
 #sendButton:hover {
@@ -350,5 +353,35 @@ body, html {
     
     .chat-input-container {
         padding: 15px;
+    }
+    
+    /* Botão flutuante para mobile */
+    .input-wrapper {
+        padding-right: 60px; /* Espaço para o botão flutuante */
+    }
+    
+    #questionInput {
+        padding-right: 20px; /* Mais espaço à direita para evitar sobreposição */
+    }
+    
+    #sendButton {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        box-shadow: 0 4px 12px rgba(98, 0, 234, 0.4);
+        border: 2px solid white;
+    }
+    
+    #sendButton:hover {
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 6px 16px rgba(98, 0, 234, 0.5);
+    }
+    
+    #sendButton:disabled {
+        transform: translateY(-50%);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 }
