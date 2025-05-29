@@ -237,6 +237,10 @@ body, html {
     font-size: 1rem;
     outline: none;
     font-family: 'Poppins', sans-serif;
+    resize: none;
+    min-height: 20px;
+    max-height: 120px;
+    overflow-y: auto;
 }
 
 #questionInput::placeholder {
@@ -357,11 +361,32 @@ body, html {
     
     /* Botão flutuante para mobile */
     .input-wrapper {
-        padding-right: 60px; /* Espaço para o botão flutuante */
+        padding-right: 30px; /* Espaço para o botão flutuante */
+        position: relative;
     }
     
     #questionInput {
-        padding-right: 20px; /* Mais espaço à direita para evitar sobreposição */
+        padding-right: 50px !important; /* Força o padding para evitar sobreposição */
+        box-sizing: border-box;
+        width: 100%;
+        max-height: 80px; /* Altura máxima menor em mobile */
+        overflow-y: auto;
+        /* Permite quebra de linha normal */
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    
+    /* Máscara visual para esconder o texto que passa do botão */
+    .input-wrapper::after {
+        content: '';
+        position: absolute;
+        right: 60px;
+        top: 0;
+        bottom: 0;
+        width: 20px;
+        background: linear-gradient(to right, transparent, #f5f5f5);
+        pointer-events: none;
+        z-index: 5;
     }
     
     #sendButton {
@@ -373,6 +398,8 @@ body, html {
         height: 48px;
         box-shadow: 0 4px 12px rgba(98, 0, 234, 0.4);
         border: 2px solid white;
+        flex-shrink: 0; /* Impede que o botão diminua */
+        z-index: 10;
     }
     
     #sendButton:hover {

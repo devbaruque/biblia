@@ -332,8 +332,19 @@ class SantoSaberChat {
     }
 
     adjustInputHeight() {
-        this.questionInput.style.height = 'auto';
-        this.questionInput.style.height = Math.min(this.questionInput.scrollHeight, 120) + 'px';
+        // Verifica se está em mobile
+        const isMobile = window.innerWidth <= 480;
+        
+        if (isMobile) {
+            // Em mobile, limita a altura para evitar problemas com o botão
+            this.questionInput.style.height = 'auto';
+            const newHeight = Math.min(this.questionInput.scrollHeight, 80); // Altura máxima menor em mobile
+            this.questionInput.style.height = newHeight + 'px';
+        } else {
+            // Em desktop, comportamento normal
+            this.questionInput.style.height = 'auto';
+            this.questionInput.style.height = Math.min(this.questionInput.scrollHeight, 120) + 'px';
+        }
     }
 
     scrollToBottom() {
